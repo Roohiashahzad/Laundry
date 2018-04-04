@@ -2,4 +2,5 @@
     <string name="app_name">Laundra Go</string>
     <string name="laundra_go">LAUNDRA GO</string>
     <string name="copyrights_text">© All Rights Reserved</string>
+    <string name="new_to_laundra_go_signup"><u>New to Laundra Go? SignUp!</u></string>
 </resources>
