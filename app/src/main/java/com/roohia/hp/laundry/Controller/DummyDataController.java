@@ -41,6 +41,19 @@ public class DummyDataController {
         return null;
     }
 
+    public String signup(Context context, StringEntity params) {
+        try {
+            JSONObject jsonObject = new JSONObject(convertStreamToString(params.getContent()));
+            return FileReader.getInstance().readFileFromAssets(context, "api/signup.json");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     private String convertStreamToString(InputStream is) {
@@ -70,6 +83,10 @@ public class DummyDataController {
         switch (url) {
             case ServerUrls.LOGIN_URL:
                 return login(context, params);
+
+            case ServerUrls.SIGNUP_URL:
+                return signup(context,params);
+
         }
         return "";
     }

@@ -5,6 +5,7 @@ public class ServerUrls {
     public static final String LIVE_BASE_URL = "DummyLiveUrl";
     public static final String BASE_URL = STAGING_BASE_URL;
     public static final String LOGIN_URL = "/login";
+    public static final String SIGNUP_URL = "/signup";
 
 
 

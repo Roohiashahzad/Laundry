@@ -3,6 +3,7 @@ package com.roohia.hp.laundry.viewHolders;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -16,6 +17,9 @@ import android.widget.Toast;
 
 import com.roohia.hp.laundry.Controller.AuthController;
 import com.roohia.hp.laundry.R;
+import com.roohia.hp.laundry.gui.activities.HomeActivity;
+import com.roohia.hp.laundry.gui.activities.LoginActivity;
+import com.roohia.hp.laundry.gui.activities.SignupActivity;
 import com.roohia.hp.laundry.gui.interfaces.LoginStatusInterface;
 import com.roohia.hp.laundry.model.constants.Constants;
 import com.roohia.hp.laundry.model.utils.CodeUtils;
@@ -24,6 +28,7 @@ public class LoginViewHolder implements View.OnClickListener{
     private EditText etUsername = null;
     private EditText etPassword = null;
     private Button btnLogin = null;
+    private TextView btnSignup = null;
     ProgressDialog progressDialog = null;
     private Context mContext ;
     private View root;
@@ -44,9 +49,11 @@ public class LoginViewHolder implements View.OnClickListener{
         etUsername = (EditText) root.findViewById(R.id.et_username);
         etPassword = (EditText) root.findViewById(R.id.et_password);
         btnLogin = (Button) root.findViewById(R.id.btn_login);
+        btnSignup = (TextView) root.findViewById(R.id.btnSignup);
     }
     public void setContent(){
         btnLogin.setOnClickListener(this);
+        btnSignup.setOnClickListener(this);
         etPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -63,6 +70,13 @@ public class LoginViewHolder implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.btn_login:
                 authenticateLogin();
+                break;
+
+            case R.id.btnSignup:
+                Intent signupIntent = new Intent(mContext, SignupActivity.class);
+                ((LoginActivity)mContext).startActivity(signupIntent);
+                ((LoginActivity)mContext).overridePendingTransition(R.anim.fade_in_slide, R.anim.fade_out_slide);
+                ((LoginActivity)mContext).finish();
                 break;
         }
 
