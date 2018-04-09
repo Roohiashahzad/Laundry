@@ -3,4 +3,7 @@
     <string name="laundra_go">LAUNDRA GO</string>
     <string name="copyrights_text">© All Rights Reserved</string>
     <string name="new_to_laundra_go_signup"><u>New to Laundra Go? SignUp!</u></string>
+    <string name="title_activity_main">Laundra GO</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="response_code_200">Success</string>
+    <string name="response_code_400">Method(Get/POST) type not matched with Web API</string>
+    <string name="login_response_code_400">Invalid username or password. Please try to login again.</string>
+    <string name="response_code_405">Input data is invalid/missing</string>
+    <string name="response_code_403">Exception occured on server side</string>
+    <string name="response_code_499">Unable to connect internet. Please check your WIFI/Mobile Data connection.</string>
+    <string name="response_code_401">User session is expired</string>
+    <string name="response_code_404">No trainee information found for given class</string>
+    <string name="response_code_4001">Failed to download trainee image for trainee id %1$s. Please check your internet connection and sync again.</string>
+    <string name="response_code_4002">Failed to download trainee image for trainee id %1$s. Trainee image path is empty or null.</string>
+    <string name="response_code_4003">Failed to save trainee image for trainee id %1$s. Please check your device storage</string>
+    <string name="response_code_4004">Failed to download trainee image for trainee id %1$s. Response from server is invalid</string>
+    <string name="response_code_301">Incorrect username or password. Please try again.</string>
+    <string name="response_code_0">Request Timed Out. Please try again.</string>
+    <string name="login_response_code_0">Request Timed Out. Please try again.</string>
+
+</resources>
