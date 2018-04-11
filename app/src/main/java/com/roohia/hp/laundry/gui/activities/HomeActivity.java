@@ -32,11 +32,11 @@ import com.roohia.hp.laundry.model.utils.LayoutUtils;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnTouchListener {
 
     protected ActionBar mActionBar = null;
     ListView lvNavItems;
-    RelativeLayout rltNewIssue, rltMyIssues, rltSyncData, rltLogout;
+    RelativeLayout rltNewOrder, rltMyOrders, rltUserProfile, rltLogout;
     NavigationListAdapter navigationListAdapter;
     NavigationView navView = null;
     private ArrayList<NavItem> navItems = new ArrayList<>();
@@ -65,6 +65,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         lvNavItems.setOnItemClickListener(this);
         setDrawerWidth();
 
+        rltNewOrder = (RelativeLayout) findViewById(R.id.rlt_log_new_order);
+        rltMyOrders = (RelativeLayout) findViewById(R.id.rlt_my_logged_orders);
+        rltUserProfile = (RelativeLayout) findViewById(R.id.rlt_user_profile);
+        rltLogout = (RelativeLayout) findViewById(R.id.rlt_logout);
+
+        rltNewOrder.setOnTouchListener(this);
+        rltMyOrders.setOnTouchListener(this);
+        rltUserProfile.setOnTouchListener(this);
+        rltLogout.setOnTouchListener(this);
 
     }
 
@@ -82,7 +91,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initializeNavigationMenuItems() {
-
+        navItems.add(new NavItem("Home", R.drawable.icon_home, true));
+        navItems.add(new NavItem("Log New Issue", R.drawable.icon_log_new_issue, false));
+        navItems.add(new NavItem("My Logged Issues", R.drawable.icon_view_my_logged_issues, false));
+        navItems.add(new NavItem("Logout", R.drawable.icon_logout, false));
 
     }
 
@@ -93,14 +105,59 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void onNavItemSelection(int position) {
+        if (navigationListAdapter != null) {
+            navigationListAdapter.getItems().get(0).setSelected(false);
+            navigationListAdapter.getItems().get(1).setSelected(false);
+            navigationListAdapter.getItems().get(2).setSelected(false);
+            navigationListAdapter.getItems().get(3).setSelected(false);
 
+            navigationListAdapter.getItems().get(position).setSelected(true);
+
+            navigationListAdapter.notifyDataSetChanged();
+
+            if (position == 3)
+                handleGridAndNavActions(4);
+            else
+                handleGridAndNavActions(position);
+        }
 
     }
 
     public void handleGridAndNavActions(int position) {
-
+        switch (position) {
+            case 0:
+                clearBackStack();
+                break;
+            case 1:
+                //showFragment(NewIssueFragment.newInstance(this), "newIssues");
+                break;
+            case 2:
+                //showFragment(AllIssuesFragment.newInstance(), "allIssues");
+                break;
+            case 3:
+                //showFragment(UserProfileFragment.newInstance(this, DBHandler.getInstance().getCurrentUser()), "USER_PROFILE_FRAGMENT");
+                break;
+            case 4:
+                handleLogout();
+                break;
+        }
     }
 
+    public void showFragment(Fragment fragment, String tag) {
+        if (fragment == null)
+            return;
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.ll_main_content, fragment, tag);
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_out_left, R.anim.slide_out_right);
+            fragmentTransaction.show(fragment);
+            fragmentTransaction.addToBackStack(tag);
+            fragmentTransaction.commit();
+        } catch (IllegalStateException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -114,4 +171,99 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        RelativeLayout pressedButton = null;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (v.getId() == R.id.rlt_log_new_order) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_log_new_order);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
+                    return true;
+
+                } else if (v.getId() == R.id.rlt_my_logged_orders) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_my_logged_orders);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
+                    return true;
+
+                } else if (v.getId() == R.id.rlt_user_profile) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_user_profile);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
+                    return true;
+                } else if (v.getId() == R.id.rlt_logout) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_logout);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
+                    return true;
+                } else {
+                    return false;
+                }
+
+
+            case MotionEvent.ACTION_UP: {
+                if (v.getId() == R.id.rlt_log_new_order) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_log_new_order);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid));
+
+                    onNavItemSelection(1);
+
+                    return true;
+
+                } else if (v.getId() == R.id.rlt_my_logged_orders) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_my_logged_orders);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid));
+
+                    onNavItemSelection(2);
+
+                    return true;
+
+                } else if (v.getId() == R.id.rlt_user_profile) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_user_profile);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid));
+
+                    handleGridAndNavActions(3);
+
+                    return true;
+
+                } else if (v.getId() == R.id.rlt_logout) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_logout);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid));
+
+                    handleGridAndNavActions(4);
+
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+
+        }
+        return false;
+    }
+
+    public void clearBackStack() {
+        FragmentManager fm = this.getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
+
+    public void removeTopFragmentFromBackStack(){
+        FragmentManager fm = this.getSupportFragmentManager();
+        fm.popBackStack();
+    }
+
+    public void handleLogout() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
 }
