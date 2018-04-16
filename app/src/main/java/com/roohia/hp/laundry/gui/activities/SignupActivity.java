@@ -1,5 +1,6 @@
 package com.roohia.hp.laundry.gui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,10 +26,16 @@ public class SignupActivity extends AppCompatActivity implements SignupStatusInt
     @Override
     public void onSignupSuccess() {
         signupViewHolder.hideProgressDialog();
-        Intent LoginIntent = new Intent(SignupActivity.this, LoginActivity.class);
-        startActivity(LoginIntent);
-        overridePendingTransition(R.anim.fade_in_slide, R.anim.fade_out_slide);
-        this.finish();
+        AlertUtils.showAlertDialog(SignupActivity.this, "Signup Successful. Please login to continue.", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent LoginIntent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(LoginIntent);
+                overridePendingTransition(R.anim.fade_in_slide, R.anim.fade_out_slide);
+                SignupActivity.this.finish();
+            }
+        });
+
     }
 
     @Override

@@ -58,17 +58,6 @@ public class NetworkManager {
         }
     }
 
-
-    /*public void postLogin(Context context, String url, StringEntity params, JsonHttpResponseHandler responseHandler) {
-        if (!Constants.isApiLive)
-            manageOffline(context, url, params, responseHandler, null);
-        else {
-            asyncClient.removeHeader(Constants.HEADER_KEY_AUTHORIZATION);
-            asyncClient.addHeader(Constants.HEADER_KEY_CONTENT_TYPE, Constants.HEADER_KEY_CONTENT_TYPE_VALUE_URL_ENCODE);
-            asyncClient.post(context, getAbsoluteUrl(url), params, Constants.HEADER_KEY_CONTENT_TYPE_VALUE_URL_ENCODE, responseHandler);
-        }
-    }*/
-
     private String getAbsoluteUrl(String relativeUrl) {
         return ServerUrls.BASE_URL + relativeUrl;
     }
@@ -87,28 +76,6 @@ public class NetworkManager {
             e.printStackTrace();
         }
 
-    }
-
-    public InputStream syncHttpGetRequest(Context context, String url) {
-        HttpClient httpclient = new DefaultHttpClient();
-
-        try {
-            url = url.replaceAll(" ", "%20");
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response;
-            response = httpclient.execute(httpget);
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-
-                InputStream instream = entity.getContent();
-                return instream;
-            }
-
-
-        } catch (Exception e) {
-            return null;
-        }
-        return null;
     }
 
 }

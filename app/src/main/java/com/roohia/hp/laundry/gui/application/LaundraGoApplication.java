@@ -2,12 +2,7 @@ package com.roohia.hp.laundry.gui.application;
 
 import android.support.multidex.MultiDexApplication;
 
-import com.orm.SugarContext;
 
-
-/**
- * Created by mmutaher on 11/20/2017.
- */
 
 public class LaundraGoApplication extends MultiDexApplication {
     private static LaundraGoApplication instance;

@@ -46,32 +46,10 @@ public class AuthController {
                     try {
                         if (response != null && response.getString("ResponseStatus").equals("200")) {
                             Constants.isApiLive = false;
-                            /*User user = new User();
 
-                            int userId = response.getInt("UserId");
-                            user.setUserID(userId);
-                            user.setUserName(response.getString("UserName"));
-                            user.setPassword(response.getString("UserPassword"));
-                            user.setStaffNo(response.getString("StaffNo"));
-                            user.setContactInfo(response.getString("ContactInfo"));
-                            user.setDepartment(response.getString("Department"));
-                            user.setUserEmail(response.getString("UserEmail"));
-                            user.setFullName(response.getString("FullName"));
-
-                            DBHandler.getInstance().saveUser(user);
-                            *//*for (Header header : headers) {
-                                if (header.getName().equals(Constants.HEADER_KEY)) {
-                                    loginStatusInterface.onLoginSuccess(header.getValue(), userId);
-                                    return;
-                                }
-                            }*/
-                            /*String accessToken = response.getString("access_token");
-                            if (accessToken != null && !accessToken.isEmpty()) {*/
                                 loginStatusInterface.onLoginSuccess();
                                 return;
-                            /*}
 
-                            loginStatusInterface.onLoginFailed("404", "Auth_Token not found");*/
                         } else {
                             Constants.isApiLive = false;
                             loginStatusInterface.onLoginFailed(response.getString("ResponseStatus"), response.getString("message"));
@@ -93,12 +71,6 @@ public class AuthController {
 
                 }
 
-                /*@Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Constants.isApiLive = false;
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                    loginStatusInterface.onLoginFailed(403 + "", CodeUtils.getErrorMessageFromCode(context, 403));
-                }*/
             });
         } catch (JSONException e) {
             e.printStackTrace();

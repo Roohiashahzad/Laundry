@@ -17,13 +17,4 @@ public class LayoutUtils {
         return (int) dWidth;
     }
 
-    public static float pxFromDp(final Context context, final float dp) {
-        return dp * context.getResources().getDisplayMetrics().density;
-    }
-
-    public static Bitmap scaleBitmap(Bitmap bitmap, double width){
-        int nh = (int) ( bitmap.getHeight() * (width / bitmap.getWidth()) );
-        Bitmap scaled = Bitmap.createScaledBitmap(bitmap, (int)width, nh, true);
-        return scaled;
-    }
 }

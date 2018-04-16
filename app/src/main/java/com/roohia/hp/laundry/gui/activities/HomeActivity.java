@@ -1,10 +1,10 @@
 package com.roohia.hp.laundry.gui.activities;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,13 +21,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.adapters.NavigationListAdapter;
 import com.roohia.hp.laundry.model.bo.NavItem;
-import com.roohia.hp.laundry.model.utils.CodeUtils;
 import com.roohia.hp.laundry.model.utils.LayoutUtils;
 
 import java.util.ArrayList;
