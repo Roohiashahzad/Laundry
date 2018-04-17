@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rlt_item_details"
-
+        android:visibility="gone"
         android:layout_below="@+id/ll_item_header"
         android:padding="10dp"
         >
