@@ -42,4 +42,14 @@ public class CodeUtils {
         return (activeNetwork != null &&activeNetwork.isConnected());
     }
 
+    public int convertStringToInt(String inputstring){
+        if(inputstring == null || inputstring.isEmpty()){
+            return  0;
+        }
+        else
+        {
+            return Integer.valueOf(inputstring);
+        }
+    }
+
 }

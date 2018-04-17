@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.roohia.hp.laundry.R;
+import com.roohia.hp.laundry.gui.Fragments.NewOrderFragment;
 import com.roohia.hp.laundry.gui.adapters.NavigationListAdapter;
 import com.roohia.hp.laundry.model.bo.NavItem;
 import com.roohia.hp.laundry.model.utils.LayoutUtils;
@@ -126,7 +127,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 clearBackStack();
                 break;
             case 1:
-                //showFragment(NewIssueFragment.newInstance(this), "newIssues");
+                showFragment(NewOrderFragment.newInstance(), "newOrder");
                 break;
             case 2:
                 //showFragment(AllIssuesFragment.newInstance(), "allIssues");
@@ -156,6 +157,22 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+
+    public void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+    }
+
+    public void showProgressDialog(String message) {
+        if (progressDialog == null || !progressDialog.isShowing()) {
+            progressDialog = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage(message);
+            progressDialog.show();
+        }
+    }
 
     @Override
     public void onBackPressed() {
