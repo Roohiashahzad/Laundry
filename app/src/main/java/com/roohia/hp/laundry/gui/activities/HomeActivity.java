@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.roohia.hp.laundry.R;
+import com.roohia.hp.laundry.gui.Fragments.MyOrdersFragment;
 import com.roohia.hp.laundry.gui.Fragments.NewOrderFragment;
 import com.roohia.hp.laundry.gui.adapters.NavigationListAdapter;
 import com.roohia.hp.laundry.model.bo.NavItem;
@@ -130,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 showFragment(NewOrderFragment.newInstance(), "newOrder");
                 break;
             case 2:
-                //showFragment(AllIssuesFragment.newInstance(), "allIssues");
+                showFragment(MyOrdersFragment.newInstance(), "allOrders");
                 break;
             case 3:
                 //showFragment(UserProfileFragment.newInstance(this, DBHandler.getInstance().getCurrentUser()), "USER_PROFILE_FRAGMENT");

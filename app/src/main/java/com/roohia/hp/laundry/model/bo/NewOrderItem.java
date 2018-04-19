@@ -1,15 +1,15 @@
 package com.roohia.hp.laundry.model.bo;
 
 
-public class OrderItem {
+public class NewOrderItem {
 
     String itemName;
     int iconId;
 
-    public OrderItem() {
+    public NewOrderItem() {
     }
 
-    public OrderItem(String itemName, int iconId) {
+    public NewOrderItem(String itemName, int iconId) {
         this.itemName = itemName;
         this.iconId = iconId;
     }

@@ -13,14 +13,14 @@ import android.widget.ListView;
 import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.activities.HomeActivity;
 import com.roohia.hp.laundry.gui.adapters.NewOrderItemsAdapter;
-import com.roohia.hp.laundry.model.bo.OrderItem;
+import com.roohia.hp.laundry.model.bo.NewOrderItem;
 
 import java.util.ArrayList;
 
 public class NewOrderFragment extends Fragment implements  AdapterView.OnItemClickListener, View.OnClickListener {
 
     private ListView lvOrderItems = null;
-    private ArrayList<OrderItem> orderItems = new ArrayList<>();
+    private ArrayList<NewOrderItem> newOrderItems = new ArrayList<>();
     private NewOrderItemsAdapter newOrderItemsAdapter = null;
 
 
@@ -43,7 +43,7 @@ public class NewOrderFragment extends Fragment implements  AdapterView.OnItemCli
         LinearLayout root = (LinearLayout) view.findViewById(R.id.root);
         root.setOnClickListener(this);
         lvOrderItems = (ListView) view.findViewById(R.id.new_order_items);
-        newOrderItemsAdapter = new NewOrderItemsAdapter(getContext(), orderItems);
+        newOrderItemsAdapter = new NewOrderItemsAdapter(getContext(), newOrderItems);
         lvOrderItems.setAdapter(newOrderItemsAdapter);
         lvOrderItems.setOnItemClickListener(this);
         getAllOrderItems();
@@ -53,17 +53,17 @@ public class NewOrderFragment extends Fragment implements  AdapterView.OnItemCli
 
     private void getAllOrderItems() {
         ((HomeActivity) getActivity()).showProgressDialog("Loading...");
-        orderItems.add(new OrderItem("Shirt",R.drawable.icon_shirt));
-        orderItems.add(new OrderItem("Trousers",R.drawable.icon_trousers));
-        orderItems.add(new OrderItem("Dress",R.drawable.icon_dress));
-        orderItems.add(new OrderItem("Frock",R.drawable.icon_frocks));
-        orderItems.add(new OrderItem("Jacket",R.drawable.icon_jacket));
-        orderItems.add(new OrderItem("Jeans",R.drawable.icon_jeans));
-        orderItems.add(new OrderItem("Sweater",R.drawable.icon_sweater));
-        orderItems.add(new OrderItem("Suit",R.drawable.icon_suits));
-        orderItems.add(new OrderItem("Traditional",R.drawable.icon_traditional));
-        orderItems.add(new OrderItem("Shorts",R.drawable.icon_shorts));
-        orderItems.add(new OrderItem("Undergarments",R.drawable.icon_undergarments));
+        newOrderItems.add(new NewOrderItem("Shirt",R.drawable.icon_shirt));
+        newOrderItems.add(new NewOrderItem("Trousers",R.drawable.icon_trousers));
+        newOrderItems.add(new NewOrderItem("Dress",R.drawable.icon_dress));
+        newOrderItems.add(new NewOrderItem("Frock",R.drawable.icon_frocks));
+        newOrderItems.add(new NewOrderItem("Jacket",R.drawable.icon_jacket));
+        newOrderItems.add(new NewOrderItem("Jeans",R.drawable.icon_jeans));
+        newOrderItems.add(new NewOrderItem("Sweater",R.drawable.icon_sweater));
+        newOrderItems.add(new NewOrderItem("Suit",R.drawable.icon_suits));
+        newOrderItems.add(new NewOrderItem("Traditional",R.drawable.icon_traditional));
+        newOrderItems.add(new NewOrderItem("Shorts",R.drawable.icon_shorts));
+        newOrderItems.add(new NewOrderItem("Undergarments",R.drawable.icon_undergarments));
         newOrderItemsAdapter.notifyDataSetChanged();
 
         ((HomeActivity) getActivity()).hideProgressDialog();

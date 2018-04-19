@@ -141,7 +141,7 @@
             android:background="@drawable/border_round_corners_button"
             android:maxWidth="500dp"
             android:minWidth="500dp"
-            android:text="Add to Cart"
+            android:text="Add to Basket"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
