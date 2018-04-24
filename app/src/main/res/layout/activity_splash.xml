@@ -21,7 +21,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:text="@string/laundra_go"
             android:textSize="@dimen/textsize_eighteen"
             android:layout_centerVertical="true"
@@ -33,7 +33,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:text="Best Laundry Service in Town"
             android:textSize="@dimen/textsize_fourteen"
             android:layout_centerVertical="true"
@@ -46,7 +46,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:text="@string/copyrights_text"
             android:textSize="@dimen/textsize_ten"
             android:layout_alignParentBottom="true"
