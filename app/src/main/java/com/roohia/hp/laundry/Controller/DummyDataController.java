@@ -54,6 +54,19 @@ public class DummyDataController {
         return null;
     }
 
+    public String profile(Context context, StringEntity params) {
+        try {
+            JSONObject jsonObject = new JSONObject(convertStreamToString(params.getContent()));
+            return FileReader.getInstance().readFileFromAssets(context, "api/profile.json");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     private String convertStreamToString(InputStream is) {
@@ -87,6 +100,8 @@ public class DummyDataController {
             case ServerUrls.SIGNUP_URL:
                 return signup(context,params);
 
+            case ServerUrls.UPDATE_USER_URL:
+                return profile(context, params);
         }
         return "";
     }

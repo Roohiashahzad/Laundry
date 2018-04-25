@@ -6,4 +6,12 @@
     <string name="title_activity_main">Laundra GO</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="fullname_missing_prompt">Please provide your fullname to continue.</string>
+    <string name="email_missing_prompt">Please provide your email address to continue.</string>
+    <string name="address_missing_prompt">Please provide your address to continue.</string>
+    <string name="contact_missing_prompt">Please provide your contact number to continue.</string>
+    <string name="saving_profile_prompt">Saving Profile ...</string>
+    <string name="no_internet_on_submission_message">Connection error. Please connect to internet and try again.</string>
+    <string name="profile_success_prompt">Profile Updated Successfully.</string>
+    <string name="profile_failure_prompt">Profile Updation Failed. Try again!</string>
 </resources>

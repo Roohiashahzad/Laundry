@@ -6,6 +6,7 @@ public class ServerUrls {
     public static final String BASE_URL = STAGING_BASE_URL;
     public static final String LOGIN_URL = "/login";
     public static final String SIGNUP_URL = "/signup";
+    public static final String UPDATE_USER_URL = "/profile";
 
 
 
