@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlt_tc_request_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:id="@+id/ll_item_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/transparent">
+
+        <ImageView
+            android:id="@+id/iv_cloth_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/icon_trousers"
+            android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:minHeight="50dp"
+            android:padding="8dp" />
+
+
+        <TextView
+            android:id="@+id/cloth_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@color/transparent"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:minHeight="50dp"
+            android:paddingLeft="5dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="Cloth Name"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_open"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical"
+            android:minHeight="50dp"
+            android:padding="8dp"
+            android:src="@drawable/icon_drop_down" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlt_item_details"
+        android:visibility="gone"
+        android:layout_below="@+id/ll_item_header"
+        android:padding="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:id="@+id/ll_wash_quantity">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Dry Clean / Wash Quantity"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                />
+
+            <EditText
+                android:id="@+id/et_wash_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="0"
+                android:enabled="false"
+                android:gravity="center"
+                android:padding="5dp"
+                android:background="@drawable/border_round_corners"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:id="@+id/ll_Press_quantity"
+            android:layout_below="@+id/ll_wash_quantity"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="Iron / Steam Press Quantity"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                />
+
+            <EditText
+                android:id="@+id/et_press_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border_round_corners"
+                android:enabled="false"
+                android:padding="5dp"
+                android:gravity="center"
+                android:hint="0"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/ll_Press_quantity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/border_round_corners_button"
+            android:maxWidth="500dp"
+            android:minWidth="500dp"
+            android:text="Remove from Basket"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/rlt_item_details"
+        android:background="#e6e6e6" />
+</RelativeLayout>

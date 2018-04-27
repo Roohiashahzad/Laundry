@@ -2,6 +2,7 @@ package com.roohia.hp.laundry.gui.application;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.orm.SugarContext;
 
 
 public class LaundraGoApplication extends MultiDexApplication {
@@ -15,12 +16,13 @@ public class LaundraGoApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        SugarContext.init(this);
 
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-
+        SugarContext.terminate();
     }
 }

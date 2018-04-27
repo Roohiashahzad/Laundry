@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +24,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.roohia.hp.laundry.R;
+import com.roohia.hp.laundry.gui.Fragments.BasketFragment;
 import com.roohia.hp.laundry.gui.Fragments.MyOrdersFragment;
 import com.roohia.hp.laundry.gui.Fragments.NewOrderFragment;
 import com.roohia.hp.laundry.gui.Fragments.UserProfileFragment;
@@ -36,11 +38,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     protected ActionBar mActionBar = null;
     ListView lvNavItems;
-    RelativeLayout rltNewOrder, rltMyOrders, rltUserProfile, rltLogout;
+    RelativeLayout rltNewOrder, rltMyOrders, rltUserProfile, rltLogout, rltBasket;
     NavigationListAdapter navigationListAdapter;
     NavigationView navView = null;
     private ArrayList<NavItem> navItems = new ArrayList<>();
     private ProgressDialog progressDialog;
+    ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         rltMyOrders = (RelativeLayout) findViewById(R.id.rlt_my_logged_orders);
         rltUserProfile = (RelativeLayout) findViewById(R.id.rlt_user_profile);
         rltLogout = (RelativeLayout) findViewById(R.id.rlt_logout);
+        rltBasket = (RelativeLayout) findViewById(R.id.rlt_basket);
+
 
         rltNewOrder.setOnTouchListener(this);
         rltMyOrders.setOnTouchListener(this);
@@ -139,6 +144,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 4:
                 handleLogout();
+                break;
+            case 5:
+                showFragment(BasketFragment.newInstance(),"basket");
                 break;
         }
     }
@@ -214,7 +222,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     pressedButton = (RelativeLayout) findViewById(R.id.rlt_logout);
                     pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
                     return true;
-                } else {
+                } else if (v.getId() == R.id.rlt_basket) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_basket);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
+                    return true;
+
+                }
+                else {
                     return false;
                 }
 
@@ -255,7 +270,16 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     handleGridAndNavActions(4);
 
                     return true;
-                } else {
+                } else if (v.getId() == R.id.rlt_basket) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_basket);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid));
+
+                    handleGridAndNavActions(5);
+
+                    return true;
+                }
+                else {
                     return false;
                 }
             }
@@ -282,4 +306,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
         this.finish();
     }
+
+
 }
