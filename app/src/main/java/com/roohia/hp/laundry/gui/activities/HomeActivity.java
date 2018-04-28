@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         rltMyOrders.setOnTouchListener(this);
         rltUserProfile.setOnTouchListener(this);
         rltLogout.setOnTouchListener(this);
+        rltBasket.setOnTouchListener(this);
 
     }
 
