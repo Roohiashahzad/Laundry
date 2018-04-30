@@ -89,7 +89,7 @@ public class BasketFragment extends Fragment implements  AdapterView.OnItemClick
         switch (view.getId()){
             case R.id.btn_remove:
                 if(basketItemsAdapter != null) {
-                    basketItemsAdapter.getItems().remove(view.getTag());
+                    basketItemsAdapter.getItems().remove((int)view.getTag());
                     basketItemsAdapter.notifyDataSetChanged();
                 }
                 break;
