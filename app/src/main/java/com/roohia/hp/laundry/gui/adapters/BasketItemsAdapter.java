@@ -92,7 +92,7 @@ public class BasketItemsAdapter extends ArrayAdapter {
 
         if(newOrderItem.getPressQuantity() > 0) {
             llPressQuantity.setVisibility(View.VISIBLE);
-            etPressQuantity.setText(newOrderItem.getWashQuantity() + "");
+            etPressQuantity.setText(newOrderItem.getPressQuantity() + "");
         }
         else {
             llPressQuantity.setVisibility(View.GONE);
