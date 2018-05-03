@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ib_basket"
                     android:layout_centerHorizontal="true"
-                    android:text="View Profile"
+                    android:text="View Basket"
                     android:textAlignment="center"
                     android:textColor="@color/black" />
             </RelativeLayout>

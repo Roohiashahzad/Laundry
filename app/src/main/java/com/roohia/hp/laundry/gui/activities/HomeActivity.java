@@ -4,8 +4,6 @@ package com.roohia.hp.laundry.gui.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.Fragments.BasketFragment;
 import com.roohia.hp.laundry.gui.Fragments.MyOrdersFragment;
@@ -30,6 +30,7 @@ import com.roohia.hp.laundry.gui.Fragments.NewOrderFragment;
 import com.roohia.hp.laundry.gui.Fragments.UserProfileFragment;
 import com.roohia.hp.laundry.gui.adapters.NavigationListAdapter;
 import com.roohia.hp.laundry.model.bo.NavItem;
+import com.roohia.hp.laundry.model.utils.AlertUtils;
 import com.roohia.hp.laundry.model.utils.LayoutUtils;
 
 import java.util.ArrayList;
@@ -38,11 +39,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     protected ActionBar mActionBar = null;
     ListView lvNavItems;
-    RelativeLayout rltNewOrder, rltMyOrders, rltUserProfile, rltLogout, rltBasket;
+    RelativeLayout rltNewOrder, rltMyOrders, rltUserProfile, rltLogout, rltBasket, rltScanQR;
     NavigationListAdapter navigationListAdapter;
     NavigationView navView = null;
     private ArrayList<NavItem> navItems = new ArrayList<>();
     private ProgressDialog progressDialog;
+
     ;
 
     @Override
@@ -73,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         rltUserProfile = (RelativeLayout) findViewById(R.id.rlt_user_profile);
         rltLogout = (RelativeLayout) findViewById(R.id.rlt_logout);
         rltBasket = (RelativeLayout) findViewById(R.id.rlt_basket);
+        rltScanQR = (RelativeLayout) findViewById(R.id.rlt_scan_qr);
 
 
         rltNewOrder.setOnTouchListener(this);
@@ -80,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         rltUserProfile.setOnTouchListener(this);
         rltLogout.setOnTouchListener(this);
         rltBasket.setOnTouchListener(this);
+        rltScanQR.setOnTouchListener(this);
 
     }
 
@@ -98,8 +102,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initializeNavigationMenuItems() {
         navItems.add(new NavItem("Home", R.drawable.icon_home, true));
-        navItems.add(new NavItem("Log New Issue", R.drawable.icon_log_new_issue, false));
-        navItems.add(new NavItem("My Logged Issues", R.drawable.icon_view_my_logged_issues, false));
+        navItems.add(new NavItem("New Order", R.drawable.icon_log_new_issue, false));
+        navItems.add(new NavItem("My Orders", R.drawable.icon_view_my_logged_issues, false));
         navItems.add(new NavItem("Logout", R.drawable.icon_logout, false));
 
     }
@@ -229,6 +233,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
                     return true;
 
+                } else if (v.getId() == R.id.rlt_scan_qr) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_scan_qr);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid_pressed));
+                    return true;
+
                 }
                 else {
                     return false;
@@ -280,6 +290,19 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     return true;
                 }
+                else if (v.getId() == R.id.rlt_scan_qr) {
+
+                    pressedButton = (RelativeLayout) findViewById(R.id.rlt_scan_qr);
+                    pressedButton.setBackground(ContextCompat.getDrawable(HomeActivity.this, R.drawable.border_round_corners_home_grid));
+
+                    IntentIntegrator integrator = new IntentIntegrator(this);
+                    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                    integrator.setPrompt("Scan the QR code to continue.");
+                    integrator.initiateScan();
+                    return true;
+                }
+
+
                 else {
                     return false;
                 }
@@ -288,6 +311,21 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                AlertUtils.showAlertDialog(this,"No data found for this QR code.",null);
+            } else {
+                AlertUtils.showAlertDialog(this,"This order belongs to: \n" + result.getContents(),null);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     public void clearBackStack() {
