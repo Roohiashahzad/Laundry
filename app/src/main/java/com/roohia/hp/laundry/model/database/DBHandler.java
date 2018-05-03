@@ -3,6 +3,8 @@ package com.roohia.hp.laundry.model.database;
 
 
 
+import com.roohia.hp.laundry.model.dbo.Order;
+import com.roohia.hp.laundry.model.dbo.OrderItems;
 import com.roohia.hp.laundry.model.dbo.User;
 import com.roohia.hp.laundry.model.utils.PreferenceUtils;
 
@@ -23,6 +25,22 @@ public class DBHandler {
         List<User> user = User.listAll(User.class);
         if (user != null && user.size() > 0)
             return user.get(user.size() - 1).getId() + 1;
+        else
+            return 1;
+    }
+
+    public long getNextOrderId() {
+        List<Order> order = Order.listAll(Order.class);
+        if (order != null && order.size() > 0)
+            return order.get(order.size() - 1).getId() + 1;
+        else
+            return 1;
+    }
+
+    public long getNextItemId() {
+        List<OrderItems> orderItems = OrderItems.listAll(OrderItems.class);
+        if (orderItems != null && orderItems.size() > 0)
+            return orderItems.get(orderItems.size() - 1).getId() + 1;
         else
             return 1;
     }
