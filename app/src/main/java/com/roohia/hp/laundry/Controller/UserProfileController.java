@@ -4,9 +4,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.interfaces.SubmitUserInterface;
 import com.roohia.hp.laundry.model.constants.Constants;
 import com.roohia.hp.laundry.model.constants.ServerUrls;
+import com.roohia.hp.laundry.model.database.DBHandler;
+import com.roohia.hp.laundry.model.dbo.User;
 import com.roohia.hp.laundry.model.utils.CodeUtils;
 
 import org.json.JSONException;
@@ -32,17 +35,16 @@ public class UserProfileController {
         return ourInstance;
     }
 
-    public void submitUserInfo(final Context context,  String fullname, String email, String address, String contact, final SubmitUserInterface callbackInterface) {
+    public void submitUserInfo(final Context context, String username, final String fullname, final String email, final String address, final String contact, final SubmitUserInterface callbackInterface) {
 
         try {
-
+            final User user = DBHandler.getInstance().getCurrentUser();
             JSONObject userInfo = new JSONObject();
-            userInfo.put("fullname", fullname );
+            userInfo.put("id", user.getId());
+            userInfo.put("username", username);
             userInfo.put("email", email);
-            userInfo.put("address", address);
-            userInfo.put("contact", contact);
             StringEntity params = new StringEntity(userInfo.toString());
-            Constants.isApiLive = false;
+            Constants.isApiLive = true;
             NetworkManager.getInstance().post(context, ServerUrls.UPDATE_USER_URL, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
@@ -50,9 +52,13 @@ public class UserProfileController {
                     super.onSuccess(statusCode, headers, response);
                     try {
                         if (response != null && response.getString("ResponseStatus").equals("200")) {
+                            user.setAddress(address);
+                            user.setContact(contact);
+                            user.setFullName(fullname);
+                            user.save();
                             callbackInterface.onSubmissionSuccessful();
                         } else {
-                            callbackInterface.onSubmissionFailed(response.getString("ResponseStatus"), CodeUtils.getErrorMessageFromCode(context, response.getString("ResponseStatus")));
+                            callbackInterface.onSubmissionFailed(response.getString("ResponseStatus"),response.getString("message"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -63,7 +69,7 @@ public class UserProfileController {
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     Constants.isApiLive = false;
                     super.onFailure(statusCode, headers, throwable, errorResponse);
-                    callbackInterface.onSubmissionFailed(Constants.NO_INTERNET_ERROR_CODE + "", CodeUtils.getErrorMessageFromCode(context, Constants.NO_INTERNET_ERROR_CODE));
+                    callbackInterface.onSubmissionFailed(statusCode + "", context.getString(R.string.unexpected_error_on_server));
                 }
             });
         } catch (JSONException | UnsupportedEncodingException e) {

@@ -53,6 +53,22 @@ public class DBHandler {
         return null;
     }
 
+    public void saveLoginUser(User user) {
+        List<User> list = User.find(User.class, "User_Email = ?",user.getUserEmail());
+        if (list.size() > 0) {
+            User old = list.get(0);
+            old.setFullName(user.getUserName());
+            //old.setAddress(user.getAddress());
+            old.setUserName(user.getUserName());
+            //old.setContact(user.getContact());
+            old.setUserEmail(user.getUserEmail());
+            old.setUserId(user.getUserId());
+            old.save();
+        } else {
+            user.save();
+        }
+    }
+
     public void saveUser(User user) {
         List<User> list = User.find(User.class, "User_Email = ?",user.getUserEmail());
         if (list.size() > 0) {

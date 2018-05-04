@@ -1,6 +1,7 @@
 package com.roohia.hp.laundry.gui.Fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,13 +16,15 @@ import com.roohia.hp.laundry.Controller.UserProfileController;
 import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.activities.HomeActivity;
 import com.roohia.hp.laundry.gui.interfaces.SubmitUserInterface;
+import com.roohia.hp.laundry.model.database.DBHandler;
+import com.roohia.hp.laundry.model.dbo.User;
 import com.roohia.hp.laundry.model.utils.AlertUtils;
 import com.roohia.hp.laundry.model.utils.CodeUtils;
 
 
 public class UserProfileFragment extends Fragment implements View.OnClickListener, SubmitUserInterface, AdapterView.OnItemSelectedListener {
     Context mContext;
-    EditText etUsername, etFullName, etAddress, etLastUpdatedOn, etEmail, etContact;
+    EditText etUsername, etFullName, etAddress, etEmail, etContact;
     Button btnClose, btnSubmit;
     boolean submissionFlag = false;
 
@@ -50,7 +53,6 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
         etUsername = (EditText) view.findViewById(R.id.et_username);
         etFullName = (EditText) view.findViewById(R.id.et_fullname);
         etAddress = (EditText) view.findViewById(R.id.et_address);
-        etLastUpdatedOn = (EditText) view.findViewById(R.id.et_updated_on);
         etEmail = (EditText) view.findViewById(R.id.et_email);
         etContact = (EditText) view.findViewById(R.id.et_contact);
         btnClose = (Button) view.findViewById(R.id.btn_close);
@@ -58,12 +60,14 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
         btnClose.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
 
-        etUsername.setText("admin");
-        etFullName.setText("Test User");
-        etAddress.setText("Test User Address");
-        etEmail.setText("admin@laundrago.com");
-        etContact.setText("0123456789");
-        etLastUpdatedOn.setText("2018-04-24 11:49:00");
+        User user = DBHandler.getInstance().getCurrentUser();
+        if(user != null) {
+            etUsername.setText(user.getUserName());
+            etFullName.setText(user.getFullName());
+            etAddress.setText(user.getAddress());
+            etEmail.setText(user.getUserEmail());
+            etContact.setText(user.getContact());
+        }
 
 
         return view;
@@ -90,7 +94,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                     if (CodeUtils.getInstance().checkNetworkConnectivity(mContext)) {
                         ((HomeActivity) getActivity()).showProgressDialog(getString(R.string.saving_profile_prompt));
 
-                        UserProfileController.getInstance().submitUserInfo(mContext, etFullName.getText().toString(), etEmail.getText().toString(),etAddress.getText().toString(),etContact.getText().toString(),this);
+                        UserProfileController.getInstance().submitUserInfo(mContext,etUsername.getText().toString(), etFullName.getText().toString(), etEmail.getText().toString(),etAddress.getText().toString(),etContact.getText().toString(),this);
                     } else {
                         AlertUtils.showAlertDialog(mContext, getString(R.string.no_internet_on_submission_message), null);
                     }
@@ -105,7 +109,12 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     @Override
     public void onSubmissionSuccessful() {
         ((HomeActivity) getActivity()).hideProgressDialog();
-        AlertUtils.showAlertDialog(getContext(), getString(R.string.profile_success_prompt), null);
+        AlertUtils.showAlertDialog(getContext(), getString(R.string.profile_success_prompt),  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ((HomeActivity)getActivity()).removeTopFragmentFromBackStack();
+            }
+        });
     }
 
     @Override

@@ -4,11 +4,15 @@ import android.content.Context;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.interfaces.LoginStatusInterface;
 import com.roohia.hp.laundry.gui.interfaces.SignupStatusInterface;
 import com.roohia.hp.laundry.model.constants.Constants;
 import com.roohia.hp.laundry.model.constants.ServerUrls;
+import com.roohia.hp.laundry.model.database.DBHandler;
+import com.roohia.hp.laundry.model.dbo.User;
 import com.roohia.hp.laundry.model.utils.CodeUtils;
+import com.roohia.hp.laundry.model.utils.PreferenceUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +42,7 @@ public class AuthController {
             jsonObject.put("password", password);
             final StringEntity params = new StringEntity(jsonObject.toString());
 
-            Constants.isApiLive = false;
+            Constants.isApiLive = true;
             NetworkManager.getInstance().post(context, ServerUrls.LOGIN_URL, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -46,9 +50,14 @@ public class AuthController {
                     try {
                         if (response != null && response.getString("ResponseStatus").equals("200")) {
                             Constants.isApiLive = false;
-
-                                loginStatusInterface.onLoginSuccess();
-                                return;
+                            User user = new User();
+                            user.setUserId(response.getString("userid"));
+                            user.setUserName(response.getString("username"));
+                            user.setUserEmail(response.getString("email"));
+                            DBHandler.getInstance().saveLoginUser(user);
+                            PreferenceUtils.saveUserEmail(context,response.getString("email"));
+                            loginStatusInterface.onLoginSuccess();
+                            return;
 
                         } else {
                             Constants.isApiLive = false;
@@ -64,8 +73,8 @@ public class AuthController {
                     Constants.isApiLive = false;
                     super.onFailure(statusCode, headers, throwable, errorResponse);
                     try {
-                        loginStatusInterface.onLoginFailed(statusCode + "",errorResponse.getString("message") );
-                    } catch (JSONException e) {
+                        loginStatusInterface.onLoginFailed(statusCode + "",context.getString(R.string.unexpected_error_on_server));
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -87,14 +96,14 @@ public class AuthController {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", username);
-            jsonObject.put("fullname", fullname);
-            jsonObject.put("address", address);
-            jsonObject.put("contact", contactnumber);
+            //jsonObject.put("fullname", fullname);
+            //jsonObject.put("address", address);
+            //jsonObject.put("contact", contactnumber);
             jsonObject.put("email", email);
             jsonObject.put("password", password);
             final StringEntity params = new StringEntity(jsonObject.toString());
 
-            Constants.isApiLive = false;
+            Constants.isApiLive = true;
             NetworkManager.getInstance().post(context, ServerUrls.SIGNUP_URL, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -102,6 +111,14 @@ public class AuthController {
                     try {
                         if (response != null && response.getString("ResponseStatus").equals("200")) {
                             Constants.isApiLive = false;
+                            User user = new User();
+                            user.setUserName(username);
+                            user.setUserEmail(email);
+                            user.setContact(contactnumber);
+                            user.setFullName(fullname);
+                            user.setAddress(address);
+                            DBHandler.getInstance().saveUser(user);
+
                             signupStatusInterface.onSignupSuccess();
                             return;
                         } else {
@@ -118,8 +135,8 @@ public class AuthController {
                     Constants.isApiLive = false;
                     super.onFailure(statusCode, headers, throwable, errorResponse);
                     try {
-                        signupStatusInterface.onSignupFailed(statusCode + "",errorResponse.getString("message") );
-                    } catch (JSONException e) {
+                        signupStatusInterface.onSignupFailed(statusCode + "",context.getString(R.string.unexpected_error_on_server));
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
