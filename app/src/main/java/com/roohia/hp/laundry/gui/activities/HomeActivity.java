@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initializeNavigationMenuItems() {
         navItems.add(new NavItem("Home", R.drawable.icon_home, true));
-        navItems.add(new NavItem("New Order", R.drawable.icon_log_new_issue, false));
+        navItems.add(new NavItem("New OrderRecord", R.drawable.icon_log_new_issue, false));
         navItems.add(new NavItem("My Orders", R.drawable.icon_view_my_logged_issues, false));
         navItems.add(new NavItem("Logout", R.drawable.icon_logout, false));
 
@@ -151,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 handleLogout();
                 break;
             case 5:
-                showFragment(BasketFragment.newInstance(),"basket");
+                showFragment(BasketFragment.newInstance(this),"basket");
                 break;
         }
     }

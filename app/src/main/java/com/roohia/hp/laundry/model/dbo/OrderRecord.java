@@ -3,14 +3,14 @@ package com.roohia.hp.laundry.model.dbo;
 import com.orm.SugarRecord;
 
 
-public class Order extends SugarRecord {
+public class OrderRecord extends SugarRecord {
 
     String orderId;
     String orderPickupDate;
     String orderDropOffDate;
-    int active;
+    int activeStatus;
 
-    public Order() {
+    public OrderRecord() {
     }
 
     public String getOrderId() {
@@ -22,11 +22,11 @@ public class Order extends SugarRecord {
     }
 
     public int getActive() {
-        return active;
+        return activeStatus;
     }
 
     public void setActive(int active) {
-        this.active = active;
+        this.activeStatus = active;
     }
 
     public String getOrderPickupDate() {

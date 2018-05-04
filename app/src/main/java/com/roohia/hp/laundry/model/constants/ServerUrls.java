@@ -7,6 +7,7 @@ public class ServerUrls {
     public static final String LOGIN_URL = "/LaundryLoginApiCallClass.php";
     public static final String SIGNUP_URL = "/LaundrySignupApiCallClass.php";
     public static final String UPDATE_USER_URL = "/LaundryUpdateProfileApiCallClass.php";
+    public static final String CHECKOUT_URL = "/LaundryOrderApiCallClass.php";
 
 
 

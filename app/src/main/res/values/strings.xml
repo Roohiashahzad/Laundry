@@ -15,4 +15,6 @@
     <string name="profile_success_prompt">Profile Updated Successfully.</string>
     <string name="profile_failure_prompt">Profile Updation Failed. Try again!</string>
     <string name="unexpected_error_on_server">An unexpected error occured on server side. Please try later.</string>
+    <string name="checking_out_prompt">Checking out...</string>
+    <string name="order_success_prompt">Order Placed Successfully!</string>
 </resources>

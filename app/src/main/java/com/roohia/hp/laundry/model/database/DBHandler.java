@@ -3,7 +3,7 @@ package com.roohia.hp.laundry.model.database;
 
 
 
-import com.roohia.hp.laundry.model.dbo.Order;
+import com.roohia.hp.laundry.model.dbo.OrderRecord;
 import com.roohia.hp.laundry.model.dbo.OrderItems;
 import com.roohia.hp.laundry.model.dbo.User;
 import com.roohia.hp.laundry.model.utils.PreferenceUtils;
@@ -21,6 +21,48 @@ public class DBHandler {
         return ourInstance;
     }
 
+    public List<OrderItems> getOrderItemsFromBasket(){
+        String orderid = getCurrentOrderId();
+        List<OrderItems> list = OrderItems.find(OrderItems.class, "order_Id = ?", orderid);
+        return list;
+
+    }
+    public String getCurrentOrderId() {
+        List<OrderRecord> list = OrderRecord.find(OrderRecord.class, "active_Status = ?", String.valueOf(1));
+        if (list.size() > 0) {
+            return list.get(0).getOrderId();
+        } else {
+            String orderId = OrderRecord.listAll(OrderRecord.class).size() + 1 + "";
+            OrderRecord newOrderRecord = new OrderRecord();
+            newOrderRecord.setOrderId(orderId);
+            newOrderRecord.setActive(1);
+            newOrderRecord.save();
+            return orderId;
+        }
+    }
+
+    public void saveNewOrderItem(String orderId, String itemId, String itemName, String pressCount, String washCount) {
+
+        List<OrderItems> orderItems = OrderItems.find(OrderItems.class, "order_Id = ? AND item_Name=?", orderId, itemName);
+        if(orderItems.size() > 0)
+        {
+            OrderItems old = orderItems.get(0);
+            old.setItemWashCount((Integer.parseInt(old.getItemWashCount()) + Integer.parseInt(washCount))+"" );
+            old.setItemPressCount((Integer.parseInt(old.getItemPressCount()) + Integer.parseInt(pressCount))+"" );
+            old.save();
+        }
+        else{
+            OrderItems orderItem = new OrderItems();
+            orderItem.setOrderId(orderId);
+            orderItem.setOrderDetailsId(itemId);
+            orderItem.setItemName(itemName);
+            orderItem.setItemWashCount(washCount);
+            orderItem.setItemPressCount(pressCount);
+            orderItem.save();
+        }
+
+        //orderItem.set
+    }
     public long getNextUserId() {
         List<User> user = User.listAll(User.class);
         if (user != null && user.size() > 0)
@@ -30,9 +72,9 @@ public class DBHandler {
     }
 
     public long getNextOrderId() {
-        List<Order> order = Order.listAll(Order.class);
-        if (order != null && order.size() > 0)
-            return order.get(order.size() - 1).getId() + 1;
+        List<OrderRecord> orderRecord = OrderRecord.listAll(OrderRecord.class);
+        if (orderRecord != null && orderRecord.size() > 0)
+            return orderRecord.get(orderRecord.size() - 1).getId() + 1;
         else
             return 1;
     }
@@ -82,6 +124,16 @@ public class DBHandler {
             old.save();
         } else {
             user.save();
+        }
+    }
+
+    public void finalizeCurrentOrder() {
+        String orderID = getCurrentOrderId();
+        List<OrderRecord> list = OrderRecord.find(OrderRecord.class, "order_Id = ?", orderID);
+        if(list.size() > 0) {
+            OrderRecord orderRecord = list.get(0);
+            orderRecord.setActive(0);
+            orderRecord.save();
         }
     }
 

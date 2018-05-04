@@ -112,7 +112,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
         AlertUtils.showAlertDialog(getContext(), getString(R.string.profile_success_prompt),  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ((HomeActivity)getActivity()).removeTopFragmentFromBackStack();
+                ((HomeActivity)getActivity()).clearBackStack();
             }
         });
     }

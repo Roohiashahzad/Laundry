@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.roohia.hp.laundry.R;
 import com.roohia.hp.laundry.gui.activities.HomeActivity;
 import com.roohia.hp.laundry.model.bo.NewOrderItem;
+import com.roohia.hp.laundry.model.database.DBHandler;
 import com.roohia.hp.laundry.model.utils.AlertUtils;
 import com.roohia.hp.laundry.model.utils.CodeUtils;
+import com.roohia.hp.laundry.model.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 
@@ -87,7 +89,12 @@ public class NewOrderItemsAdapter extends ArrayAdapter {
                 }
                 else{
                     CodeUtils.getInstance().hideKeyboard((HomeActivity)context);
-                    AlertUtils.showAlertDialog(context,  clothName + " for press: " + String.valueOf(pressCount) + "\n" + clothName + " for wash: " + String.valueOf(washCount), new DialogInterface.OnClickListener() {
+                    String orderId = DBHandler.getInstance().getCurrentOrderId();
+                    int itemDetailsId = PreferenceUtils.getItemId();
+                    PreferenceUtils.saveItemId(context,itemDetailsId);
+                    DBHandler.getInstance().saveNewOrderItem(orderId, itemDetailsId+"", clothName,pressCount+"",washCount+"");
+
+                    AlertUtils.showAlertDialog(context,  clothName + " added to basket for press: " + String.valueOf(pressCount) + "\n" + clothName + " added to basket for wash: " + String.valueOf(washCount), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             rltItemDetails.setVisibility(View.GONE);

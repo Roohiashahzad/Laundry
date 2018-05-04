@@ -55,6 +55,17 @@ public class PreferenceUtils {
         settings.apply();
     }
 
+    public static void saveItemId(Context context, int value) {
+        SharedPreferences.Editor settings = context.getSharedPreferences(PREFERENCE_NAME, 0).edit();
+        settings.putInt("itemId", value);
+        settings.apply();
+    }
+
+    public static int getItemId() {
+        SharedPreferences settings = LaundraGoApplication.getInstance().getSharedPreferences(PREFERENCE_NAME, 0);
+        return settings.getInt("itemId", 0) + 1;
+    }
+
     public static String getString(Context context, String key) {
         return getString(context,key,"");
     }
