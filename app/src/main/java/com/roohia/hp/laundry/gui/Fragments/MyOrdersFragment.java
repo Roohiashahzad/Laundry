@@ -70,10 +70,10 @@ public class MyOrdersFragment extends Fragment implements View.OnClickListener, 
 
     private void getAllOrders() {
         ((HomeActivity) getActivity()).showProgressDialog("Loading...");
-        myOrders.add(new MyOrderItem("1","18-APRIL-2018","In-Process","OrderRecord Pickup Time: 20-APRIL-2018 10:00:00"));
-        myOrders.add(new MyOrderItem("2","18-APRIL-2018","In-Process","OrderRecord Pickup Time: 20-APRIL-2018 10:00:00"));
-        myOrders.add(new MyOrderItem("3","18-APRIL-2018","In-Process","OrderRecord Pickup Time: 20-APRIL-2018 10:00:00"));
-        myOrders.add(new MyOrderItem("4","18-APRIL-2018","In-Process","OrderRecord Pickup Time: 20-APRIL-2018 10:00:00"));
+        myOrders.add(new MyOrderItem("1","18-APRIL-2018","In-Process","Order Pickup Time: 20-APRIL-2018 10:00:00"));
+        myOrders.add(new MyOrderItem("2","18-APRIL-2018","In-Process","Order Pickup Time: 20-APRIL-2018 10:00:00"));
+        myOrders.add(new MyOrderItem("3","18-APRIL-2018","In-Process","Order Pickup Time: 20-APRIL-2018 10:00:00"));
+        myOrders.add(new MyOrderItem("4","18-APRIL-2018","In-Process","Order Pickup Time: 20-APRIL-2018 10:00:00"));
         ((HomeActivity) getActivity()).hideProgressDialog();
 
     }
