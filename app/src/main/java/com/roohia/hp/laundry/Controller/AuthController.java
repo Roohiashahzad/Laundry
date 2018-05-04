@@ -80,6 +80,17 @@ public class AuthController {
 
                 }
 
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String error, Throwable throwable) {
+                    Constants.isApiLive = false;
+                    super.onFailure(statusCode, headers, error, throwable);
+                    try {
+                        loginStatusInterface.onLoginFailed(statusCode + "",context.getString(R.string.unexpected_error_on_server));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
             });
         } catch (JSONException e) {
             e.printStackTrace();
@@ -140,6 +151,18 @@ public class AuthController {
                         e.printStackTrace();
                     }
                 }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String error, Throwable throwable) {
+                    Constants.isApiLive = false;
+                    super.onFailure(statusCode, headers, error, throwable);
+                    try {
+                        signupStatusInterface.onSignupFailed(statusCode + "",context.getString(R.string.unexpected_error_on_server));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
             });
         } catch (JSONException e) {
             e.printStackTrace();

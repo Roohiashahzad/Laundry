@@ -71,6 +71,18 @@ public class UserProfileController {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
                     callbackInterface.onSubmissionFailed(statusCode + "", context.getString(R.string.unexpected_error_on_server));
                 }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String error, Throwable throwable) {
+                    Constants.isApiLive = false;
+                    super.onFailure(statusCode, headers, error, throwable);
+                    try {
+                        callbackInterface.onSubmissionFailed(statusCode + "",context.getString(R.string.unexpected_error_on_server));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
             });
         } catch (JSONException | UnsupportedEncodingException e) {
             e.printStackTrace();
